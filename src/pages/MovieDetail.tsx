@@ -25,7 +25,7 @@ export default function MovieDetail() {
   if (isError || !movie) return <div className="error-msg">Failed to load movie.</div>;
 
   const bookedSeats = bookings
-    .filter((b) => b.movieId === movie.id && b.date === date)
+    .filter((b) => String(b.movieId) === String(movie.id) && b.date === date)
     .map((b) => b.seat);
 
   const handleBook = () => {
@@ -93,7 +93,7 @@ export default function MovieDetail() {
                 key={s}
                 className={`seat${taken ? ' taken' : seat === s ? ' selected' : ''}`}
                 disabled={taken}
-                onClick={() => setSeat(s)}
+                onClick={() => { setSeat(s); setConfirmed(null); }}
                 aria-label={`Seat ${s}${taken ? ' (taken)' : ''}`}
               >
                 {s}
